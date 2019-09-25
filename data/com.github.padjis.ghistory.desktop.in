@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=ghistory
+Categories=Office;Utility;TextTools;
+Exec=com.github.padjis.ghistory
+Icon=com.github.padjis.ghistory
+Terminal=false
+Type=Application
