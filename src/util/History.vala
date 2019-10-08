@@ -25,6 +25,8 @@ public class ghistory.Util.History : GLib.Object {
 
     public Array<Array<string>> readHistory (string searchTerm) {
         contentAsArray= new Array<Array<string>> ();
+        //string[] argsAppend={"history","-a"};
+        //execute (argsAppend);
         string[] args={"cat", GLib.Environment.get_home_dir ()+"/.bash_history"};
         string result= execute (args);
         if (result == null || result.length == 0)

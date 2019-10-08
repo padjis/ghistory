@@ -43,6 +43,10 @@ public class ghistory.Window : ApplicationWindow {
     string a_content;
     string a_visible_content;
 
+    Gtk.SearchEntry entry;
+    Gtk.TreeView view;
+    Gtk.ListStore listmodel;
+
     public Window (Application application) {
         Object (
             application: application,
@@ -64,74 +68,95 @@ public class ghistory.Window : ApplicationWindow {
 
         Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         
-        var view = new Gtk.TreeView ();
+        view = new Gtk.TreeView ();
 		this.setup_treeview (view);
         view.expand = true;
         view.activate_on_single_click=false;
 
+        entry = new Gtk.SearchEntry ();
+        entry.search_changed.connect(refreshPage);
+
 		label = new Gtk.Label ("");
-
-		var grid = new Gtk.Grid ();
-
-		grid.attach (view, 0, 0, 1, 1);
-		grid.attach (label, 0, 1, 1, 1);
-		this.add (grid);
 
 		var selection = view.get_selection ();
         selection.changed.connect (this.on_changed);
         view.row_activated.connect (this.row_activated);
-
-        box.pack_start (view, false, false, 0);
+        
+        box.pack_start (entry, true, false, 0);
+        box.pack_start (view, true, false, 0);
+        box.pack_start (label, true, false, 0);
 
         add (box);
 
         show_all ();
     }
 
-    private void refreshData(){
+    public void refreshPage(){
+        setup_treeview(view);
+        show_all();
+    }
+
+    public void refreshData(){
         History history=new History();
-        Array<Array<string>> result = history.readHistory ("");
+        string searchTerm="";
+        if(entry.text!=null)
+            searchTerm=entry.text;
+        Array<Array<string>> result = history.readHistory (searchTerm);
         data= new Array<Array<string>> ();
 
+        uint number_of_rows=20; 
         uint limit=20;
         if(result.length<limit)
             limit=result.length;
 
-        for (int i = 0; i < limit ; i++) {
+        for (int i = 0; i < number_of_rows ; i++) {
             uint position=result.length-(limit-i);
             Array<string> aResult = new Array<string> ();
-            aResult.append_val (result.index (position).index (0));
-            aResult.append_val (result.index (position).index (1));
-            aResult.append_val (result.index (position).index (2));
-            data.append_val (aResult);
+            if(i<limit){
+                aResult.append_val (result.index (position).index (0));
+                aResult.append_val (result.index (position).index (1));
+                aResult.append_val (result.index (position).index (2));
+                data.prepend_val (aResult);
+            }else{
+                aResult.append_val ("");
+                aResult.append_val ("");
+                aResult.append_val ("");
+                data.append_val (aResult);
+            }
+            //print(result.index (position).index (1)+"\n");
         }
 
     }
 
-    void setup_treeview (Gtk.TreeView view) {
+    public void setup_treeview (Gtk.TreeView view) {
         refreshData();
-        var listmodel = new Gtk.ListStore (3, typeof (string),
-                                              typeof (string),
-                                              typeof (string));
-		view.set_model (listmodel);
+        if(listmodel==null){
+            listmodel = new Gtk.ListStore (3, typeof (string),
+                                                typeof (string),
+                                                typeof (string));
+            view.set_model (listmodel);
 
-		var cell = new Gtk.CellRendererText ();
+            var cell = new Gtk.CellRendererText ();
 
-		/* 'weight' refers to font boldness.
-		 *  400 is normal.
-		 *  700 is bold.
-		 */
-		cell.set ("weight_set", true);
-		cell.set ("weight", 700);
+            /* 'weight' refers to font boldness.
+            *  400 is normal.
+            *  700 is bold.
+            */
+            cell.set ("weight_set", true);
+            cell.set ("weight", 700);
 
-		/*columns*/
-		view.insert_column_with_attributes (-1, "Line",
-                                                cell, "text",
-                                                Column.INDEX);
+            /*columns*/
+            view.insert_column_with_attributes (-1, "Line",
+                                                    cell, "text",
+                                                    Column.INDEX);
 
-		view.insert_column_with_attributes (-1, "Command",
-                                                new Gtk.CellRendererText (),
-                                                "text", Column.VISIBLE_CONTENT);
+            view.insert_column_with_attributes (-1, "Command",
+                                                    new Gtk.CellRendererText (),
+                                                    "text", Column.VISIBLE_CONTENT);
+        }else{
+            listmodel.clear();
+        }
+        
 
 		/* Insert the data into the ListStore */
 		Gtk.TreeIter iter;
@@ -154,9 +179,13 @@ public class ghistory.Window : ApplicationWindow {
                                    Column.INDEX, out an_index,
                                    Column.CONTENT, out a_content,
                                    Column.VISIBLE_CONTENT, out a_visible_content);
-            
-            copied=an_index;
-			label.set_text ("\n Double-click to copy : " + a_visible_content );
+            if(a_visible_content.len()!=0){
+                copied=an_index;
+			    label.set_text ("\n Double-click to copy : " + a_visible_content );
+            }else{
+                copied=null;
+                label.set_text ("");
+            }
 		}
 	}
 
