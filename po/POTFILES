@@ -1,5 +1,4 @@
 src/Main.vala
 src/Application.vala
 src/window/Window.vala
-src/util/Descriptor.vala
-src/grid/Grid.vala
+src/util/History.vala
