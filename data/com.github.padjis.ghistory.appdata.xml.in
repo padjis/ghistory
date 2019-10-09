@@ -12,6 +12,13 @@
     <p>ghistory is the solution for you, it is an easy to use graphic interface that displays the bash history and search in the entries</p>
   </description>
   <releases>
+    <release version="1.0.0" date="2019-10-12">
+      <description>
+        <ul>
+          <li>Ready for production</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.0.1" date="2019-09-25">
       <description>
         <ul>

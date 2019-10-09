@@ -1,4 +1,4 @@
-project('com.github.padjis.ghistory','vala','c', version: '0.0.1')
+project('com.github.padjis.ghistory','vala','c', version: '1.0.0')
 
 config_data = configuration_data()
 config_data.set('EXEC_NAME', meson.project_name())

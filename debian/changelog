@@ -1,3 +1,9 @@
+com.github.padjis.ghistory (1.0.0) bionic; urgency=high
+
+  * Ready for production.
+
+ -- Emmanuel Padjinou <emmanuel@padjinou.com>  Sat, 12 Oct 2019 00:00:00 +0000
+
 com.github.padjis.ghistory (0.0.1) bionic; urgency=medium
 
   * Initial Release.
