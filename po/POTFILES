@@ -1,4 +1,4 @@
 src/Main.vala
 src/Application.vala
-src/window/Window.vala
-src/util/History.vala
+src/Window/Window.vala
+src/Util/History.vala

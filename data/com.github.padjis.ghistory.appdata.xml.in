@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2019 Emmanuel Padjinou <emmanuel%padjinoudotkom> -->
 <component type="desktop">
   <id>com.github.padjis.ghistory</id>
@@ -70,8 +70,8 @@
     </screenshot>
   </screenshots>
   <custom>
-     <value key="x-appcenter-color-primary">#fff</value>
-     <value key="x-appcenter-color-primary-text">#333</value>
-     <value key="x-appcenter-suggested-price">1</value>
+    <value key="x-appcenter-color-primary">#fff</value>
+    <value key="x-appcenter-color-primary-text">#333</value>
+    <value key="x-appcenter-suggested-price">1</value>
   </custom>
 </component>
