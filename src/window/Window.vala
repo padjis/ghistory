@@ -179,7 +179,7 @@ public class ghistory.Window : ApplicationWindow {
                                    Column.INDEX, out an_index,
                                    Column.CONTENT, out a_content,
                                    Column.VISIBLE_CONTENT, out a_visible_content);
-            if(a_visible_content.len()!=0){
+            if(a_visible_content.length!=0){
                 copied=an_index;
 			    label.set_text ("\n Double-click to copy : " + a_visible_content );
             }else{
@@ -190,7 +190,7 @@ public class ghistory.Window : ApplicationWindow {
 	}
 
     void row_activated () {
-        if(copied!=null && copied.len()==an_index.len() && copied.contains(an_index)){
+        if(copied!=null && copied.length==an_index.length && copied.contains(an_index)){
             clipboard.set_text(a_content,-1);
             close();
         }

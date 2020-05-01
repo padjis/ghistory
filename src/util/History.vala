@@ -42,7 +42,7 @@ public class ghistory.Util.History : GLib.Object {
                 Array<string> aResult = new Array<string> ();
                 command = lines[a];
                 aResult.append_val ((a+1).to_string());
-                if(command.size()>100){
+                if(command.length>100){
                     visible_command=command.substring(0,100)+" ...";
                 }else{
                     visible_command=command;
